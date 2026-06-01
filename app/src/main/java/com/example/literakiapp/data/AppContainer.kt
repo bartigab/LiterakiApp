@@ -3,6 +3,7 @@ package com.example.literakiapp.data
 import android.content.Context
 import com.example.literakiapp.BuildConfig
 import com.example.literakiapp.data.api.LiterakiApiService
+import com.example.literakiapp.data.model.ApiMoveTileJsonAdapter
 import com.example.literakiapp.data.repository.LiterakiRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -38,6 +39,7 @@ class AppContainer(context: Context) {
         .build()
 
     private val moshi = Moshi.Builder()
+        .add(ApiMoveTileJsonAdapter())
         .add(KotlinJsonAdapterFactory())
         .build()
 

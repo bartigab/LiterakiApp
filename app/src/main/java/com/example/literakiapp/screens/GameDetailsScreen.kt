@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.literakiapp.data.model.ApiGame
 import com.example.literakiapp.data.model.ApiMove
+import com.example.literakiapp.data.model.ApiMoveTile
 import com.example.literakiapp.data.model.ApiPlayer
 import com.example.literakiapp.ui.viewmodel.BOARD_SIZE
 import com.example.literakiapp.ui.viewmodel.GameDetailsUiState
@@ -728,13 +729,7 @@ private fun MovesCard(moves: List<ApiMove>) {
                 )
             } else {
                 moves.takeLast(6).reversed().forEachIndexed { index, move ->
-                    val tilesDescription = if (move.tiles.isEmpty()) {
-                        ""
-                    } else {
-                        move.tiles.joinToString(prefix = " • ") { tile ->
-                            "${tile.letter}(${tile.x},${tile.y})"
-                        }
-                    }
+                    val tilesDescription = move.describeTiles()
                     Text(
                         text = "#${move.id} • ${move.moveType} • +${move.score} pkt$tilesDescription",
                         fontSize = 13.sp
@@ -747,3 +742,20 @@ private fun MovesCard(moves: List<ApiMove>) {
         }
     }
 }
+
+private fun ApiMove.describeTiles(): String {
+    if (tiles.isEmpty()) return ""
+
+    return tiles.joinToString(prefix = " • ", separator = ", ") { tile ->
+        tile.describe()
+    }
+}
+
+private fun ApiMoveTile.describe(): String {
+    return if (x != null && y != null) {
+        "$letter($x,$y)"
+    } else {
+        letter
+    }
+}
+

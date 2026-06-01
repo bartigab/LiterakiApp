@@ -75,10 +75,17 @@ data class ApiMove(
     @Json(name = "game_id") val gameId: Int,
     @Json(name = "user_id") val userId: Int,
     @Json(name = "move_type") val moveType: String,
-    val tiles: List<ApiTilePlacement> = emptyList(),
+    val tiles: List<ApiMoveTile> = emptyList(),
     val words: List<String> = emptyList(),
     val score: Int,
     @Json(name = "created_at") val createdAt: String
+)
+
+@JsonClass(generateAdapter = true)
+data class ApiMoveTile(
+    val letter: String,
+    val x: Int? = null,
+    val y: Int? = null
 )
 
 @JsonClass(generateAdapter = true)
